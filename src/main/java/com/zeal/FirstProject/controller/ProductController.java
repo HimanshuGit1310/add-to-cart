@@ -3,6 +3,7 @@ package com.zeal.FirstProject.controller;
 import com.zeal.FirstProject.model.Product;
 import com.zeal.FirstProject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,5 +18,10 @@ public class ProductController {
     @RequestMapping("/products")
     public List<Product> product(){
         return service.getProducts();
+    }
+
+    @RequestMapping("/product/{prodId}")
+    public Product getProductById(@PathVariable int prodId){
+        return service.getProductById(prodId);
     }
 }
