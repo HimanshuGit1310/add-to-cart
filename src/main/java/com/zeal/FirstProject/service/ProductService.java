@@ -1,34 +1,36 @@
 package com.zeal.FirstProject.service;
 
+import com.zeal.FirstProject.Repository.ProductRepo;
 import com.zeal.FirstProject.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class ProductService {
 
-    List<Product> products = new ArrayList<>( Arrays.asList(
-            new Product(101,"Iphone",80000),
-            new Product(102,"Camera",60000),
-            new Product(103,"Helmet",10000)));
-
+    @Autowired
+    ProductRepo repo;
 
     public List<Product> getProducts(){
-        return products;
+        return repo.findAll();
     }
 
-    public Product getProductById(int prodId){
-        return products.stream()
-                .filter(p-> p.getProdId()==prodId)
-                .findFirst().orElse(new Product(100,"No item found",0));
+    public Product getProductById(int prodId) {
+        return repo.findById(prodId).orElse(new Product());
     }
 
     public void addProduct(Product prod){
-        products.add(prod);
+              repo.save(prod);
+    }
+
+    public void updateProduct(Product prod){
+        repo.save(prod);
+    }
+
+    public void deleteProduct(int prodId){
+        repo.deleteById(prodId);
     }
 
 }
